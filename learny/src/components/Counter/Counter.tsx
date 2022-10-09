@@ -1,70 +1,31 @@
 import React, { useState } from 'react';
-
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
-  decrement,
-  increment,
-  incrementByAmount,
-  incrementAsync,
-  incrementIfOdd,
-  selectCount,
-} from '../../reducers/counterSlice';
+  contentSelector,
+  updateContentPiece
+} from '../../reducers/contentSlice';
 import styles from './Counter.module.scss';
-// import styles from ''
 import Button from '@mui/material/Button';
+import { useDispatch, useSelector } from "react-redux";
+import { MediaContent } from '../../types/MediaContent';
 
 function Counter() {
-  const count = useAppSelector(selectCount);
-  const dispatch = useAppDispatch();
-  const [incrementAmount, setIncrementAmount] = useState('2');
+  const {contentPieces} = useSelector(contentSelector);
+  const dispatch = useDispatch();
 
-  const incrementValue = Number(incrementAmount) || 0;
+  function updateContent(id: string, updatedContent: Partial<MediaContent>) {
+    dispatch(updateContentPiece({id, updatedContent}));
+  }
+
 
   return (
     <div>
       <div className={styles.row}>
-        <Button
-          variant='contained'
-          className={styles.button}
-          aria-label="Decrement value"
-          onClick={() => dispatch(decrement())}
-        >
-          -
-        </Button>
-        <span className={styles.value}>{count}</span>
-        <Button
-          className={styles.button}
-          aria-label="Increment value"
-          onClick={() => dispatch(increment())}
-        >
-          +
-        </Button>
-      </div>
-      <div className={styles.row}>
-        <input
-          className={styles.textbox}
-          aria-label="Set increment amount"
-          value={incrementAmount}
-          onChange={(e) => setIncrementAmount(e.target.value)}
-        />
-        <Button
-          className={styles.button}
-          onClick={() => dispatch(incrementByAmount(incrementValue))}
-        >
-          Add Amount
-        </Button>
-        <Button
-          className={styles.asyncButton}
-          onClick={() => dispatch(incrementAsync(incrementValue))}
-        >
-          Add Async
-        </Button>
-        <Button
-          className={styles.button}
-          onClick={() => dispatch(incrementIfOdd(incrementValue))}
-        >
-          Add If Odd
-        </Button>
+        {contentPieces.map((contentPiece) => {
+          return <>
+          {contentPiece.name}
+          <Button onClick={() => updateContent(contentPiece.id, {name: 'Ramsey show'})}>Change name</Button>
+          </>
+        })}
       </div>
     </div>
   );
