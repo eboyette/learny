@@ -9,7 +9,7 @@ import {
   incrementIfOdd,
   selectCount,
 } from '../../reducers/counterSlice';
-import styles from './Counter.module.css';
+import styles from './Counter.scss';
 import Button from '@mui/material/Button';
 
 function Counter() {
