@@ -9,7 +9,8 @@ import {
   incrementIfOdd,
   selectCount,
 } from '../../reducers/counterSlice';
-import styles from './Counter.scss';
+import styles from './Counter.module.scss';
+// import styles from ''
 import Button from '@mui/material/Button';
 
 function Counter() {
@@ -23,7 +24,7 @@ function Counter() {
     <div>
       <div className={styles.row}>
         <Button
-        variant='contained'
+          variant='contained'
           className={styles.button}
           aria-label="Decrement value"
           onClick={() => dispatch(decrement())}
