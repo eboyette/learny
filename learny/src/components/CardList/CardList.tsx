@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-import {
-  contentSelector,
-  updateContentPiece,
-} from '../../reducers/contentSlice';
-import styles from './Counter.module.scss';
+import { contentSelector, updateContentPiece } from '../../reducers';
+import styles from './CardList.module.scss';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { MediaContent } from '../../types/MediaContent';
@@ -12,7 +9,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
-function Counter() {
+function CardList() {
   const { contentPieces } = useSelector(contentSelector);
   const dispatch = useDispatch();
 
@@ -24,7 +21,7 @@ function Counter() {
     <div className={styles.row}>
       {contentPieces.map((contentPiece) => {
         return (
-          <Card variant="outlined">
+          <Card variant="outlined" className={styles['lrny-Card']}>
             <CardContent>
               <Typography
                 sx={{ fontSize: 14 }}
@@ -57,4 +54,4 @@ function Counter() {
   );
 }
 
-export { Counter };
+export { CardList };
