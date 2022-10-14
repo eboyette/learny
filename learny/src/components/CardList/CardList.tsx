@@ -15,13 +15,11 @@ function CardList() {
 
   return (
     <div className={styles.row}>
-      {contentPieces.map(({ name, id, whoRecommended }) => (
+      {contentPieces.map((contentPiece) => (
         <Card
-          name={name}
-          id={id}
-          recommendedBy={whoRecommended}
-          update={(id: string, newName: string) => {
-            updateContent(id, { name: newName });
+          contentPiece={contentPiece}
+          update={(newName: string) => {
+            updateContent(contentPiece.id, { name: newName });
           }}
         />
       ))}
