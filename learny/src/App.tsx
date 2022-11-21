@@ -1,12 +1,12 @@
 import React from 'react';
-import { Counter } from './components/Counter';
+import { CardList } from './components/CardList';
 import './App.scss';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Counter />
+        <CardList />
       </header>
     </div>
   );
