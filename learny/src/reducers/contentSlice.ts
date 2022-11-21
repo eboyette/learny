@@ -10,11 +10,19 @@ const initialState: ContentState = {
   contentPieces: [
     {
       id: 'banana',
-      contentType: 'book',
+      contentType: 'podcast',
       whoRecommended: 'some dude',
       name: 'JRE',
       url: 'www.google.com',
       isInProgress: true,
+    },
+    {
+      id: 'jockojuice',
+      contentType: 'book',
+      whoRecommended: 'Jimmy',
+      name: 'Extreme Ownership',
+      url: 'www.google.com',
+      isInProgress: false,
     }
   ]
 };
