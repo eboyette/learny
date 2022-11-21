@@ -1,39 +1,50 @@
 import React from 'react';
-import { updateContentPiece } from '../../reducers';
-// import styles from './CardList.module.scss';
-import { useDispatch } from 'react-redux';
 import { MediaContent } from '../../types/MediaContent';
 import { Formik, Field, Form } from 'formik';
+import { Button, CardActions, CardContent } from '@mui/material';
 
 interface Props {
   contentPiece: MediaContent;
+  isBeingEdited: boolean;
+  onUpdate: (updatedContent: Partial<MediaContent>) => void;
+  onEditToggle: () => void;
 }
 
-function EditForm({ contentPiece }: Props) {
-  const { id } = contentPiece;
-  const dispatch = useDispatch();
-
-  function updateContent(updatedContent: Partial<MediaContent>) {
-    dispatch(updateContentPiece({ id, updatedContent }));
-  }
-
+function EditForm({
+  contentPiece,
+  isBeingEdited,
+  onUpdate,
+  onEditToggle,
+}: Props) {
   return (
-    <Formik
-      initialValues={contentPiece}
-      onSubmit={({ name, whoRecommended }) => {
-        updateContent({ name, whoRecommended });
-      }}
-    >
-      <Form>
-        <label htmlFor="name">Name</label>
-        <Field id="name" name="name" />
+    <>
+      <Formik initialValues={contentPiece} onSubmit={onUpdate}>
+        <Form>
+          <CardContent>
+            <label htmlFor="name">Name</label>
+            <Field id="name" name="name" />
+            <br />
 
-        <label htmlFor="whoRecommended">Who Recommended</label>
-        <Field id="whoRecommended" name="whoRecommended" placeholder="Doe" />
-
-        <button type="submit">Save</button>
-      </Form>
-    </Formik>
+            <label htmlFor="whoRecommended">Who Recommended</label>
+            <Field
+              id="whoRecommended"
+              name="whoRecommended"
+              placeholder="Doe"
+            />
+          </CardContent>
+          <CardActions>
+            <Button size="small" onClick={onEditToggle}>
+              {isBeingEdited ? 'Cancel' : 'Edit'}
+            </Button>
+            {isBeingEdited && (
+              <Button size="small" type="submit">
+                Save
+              </Button>
+            )}
+          </CardActions>
+        </Form>
+      </Formik>
+    </>
   );
 }
 

@@ -9,6 +9,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { MediaContent } from '../../types/MediaContent';
 import { EditForm } from '../EditForm';
+import { CardBody } from '../CardBody';
 
 interface Props {
   contentPiece: MediaContent;
@@ -17,35 +18,33 @@ interface Props {
 
 function Card({ contentPiece, update }: Props) {
   const [isBeingEdited, setIsBeingEdited] = useState(false);
-  const { name, whoRecommended } = contentPiece;
+  const dispatch = useDispatch();
+
+  function updateContent(updatedContent: Partial<MediaContent>) {
+    dispatch(updateContentPiece({ id: contentPiece.id, updatedContent }));
+    setIsBeingEdited(false);
+  }
+
+  function toggleEdit() {
+    setIsBeingEdited(!isBeingEdited);
+  }
+
   return (
     <MUICard variant="outlined" className={styles['lrny-Card']}>
-      <CardContent>
-        {isBeingEdited ? (
-          <EditForm contentPiece={contentPiece} />
-        ) : (
-          <>
-            <Typography
-              sx={{ fontSize: 14 }}
-              color="text.secondary"
-              gutterBottom
-            >
-              Content Piece
-            </Typography>
-            <Typography variant="h5" component="div">
-              {name}
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              {whoRecommended}
-            </Typography>
-          </>
-        )}
-      </CardContent>
-      <CardActions>
-        <Button size="small" onClick={() => setIsBeingEdited(!isBeingEdited)}>
-          {isBeingEdited ? 'Cancel' : 'Edit'}
-        </Button>
-      </CardActions>
+      {isBeingEdited ? (
+        <EditForm
+          contentPiece={contentPiece}
+          isBeingEdited={isBeingEdited}
+          onUpdate={updateContent}
+          onEditToggle={toggleEdit}
+        />
+      ) : (
+        <CardBody
+          contentPiece={contentPiece}
+          isBeingEdited={isBeingEdited}
+          onEditToggle={toggleEdit}
+        />
+      )}
     </MUICard>
   );
 }
